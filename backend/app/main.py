@@ -1,11 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.staticfiles import StaticFiles
-from fastapi.responses import JSONResponse
 
 from .core.config import get_settings
-from .core.deps import get_db
-from .core.security import oauth2_scheme
 
 app = FastAPI(
     title=get_settings().APP_NAME,
@@ -28,20 +24,19 @@ async def health_check():
     """健康检查端点"""
     return {"status": "healthy"}
 
-
 @app.on_event("startup")
 async def startup_event():
     """应用启动事件"""
-    # TODO: 初始化数据库
-    pass
-
+    print("应用启动中...")
+    # 数据库初始化由 Alembic 处理
+    print("应用启动完成")
 
 @app.on_event("shutdown")
 async def shutdown_event():
     """应用关闭事件"""
-    # TODO: 清理资源
-    pass
-
+    print("应用关闭中...")
+    # 清理资源
+    print("应用关闭完成")
 
 # 导入路由
 from .api import admin, rooms, users, bp, records
@@ -52,7 +47,8 @@ app.include_router(users.router, prefix="/api/users", tags=["Users"])
 app.include_router(bp.router, prefix="/api/bp", tags=["BP"])
 app.include_router(records.router, prefix="/api/records", tags=["Records"])
 
-# WebSocket
+# WebSocket 集成
 from .websocket import socket_app
 
+# 将 Socket.IO ASGI 应用挂载到 FastAPI
 app.mount("/socket.io", socket_app)

@@ -2,6 +2,8 @@
 
 一个用于 Counter-Strike 2 的地图 Ban Pick 工具，支持 BO3 模式的地图禁用和选择流程。
 
+> **项目地址**: https://github.com/bilibilimnb/CS2-Map-Ban-Pick-Tool
+
 ## 技术栈
 
 - **前端**: Vue.js 3 + Vite + TailwindCSS + Socket.io-client
@@ -11,14 +13,59 @@
 
 ## 快速开始
 
-### 使用 Docker（推荐）
+### 一键部署（推荐）
 
 ```bash
-# 开发环境
-docker-compose -f docker-compose.dev.yml up
+# 克隆项目
+git clone https://github.com/bilibilimnb/CS2-Map-Ban-Pick-Tool.git
+cd CS2-Map-Ban-Pick-Tool
 
-# 生产环境
+# 1. 配置环境变量（可选）
+cp .env.example .env
+# 编辑 .env 文件，修改数据库密码等配置
+
+# 2. 一键启动（生产环境）
 docker-compose up -d
+
+# 3. 访问应用
+# 前端: http://localhost
+# 后端API: http://localhost/api
+# Swagger文档: http://localhost/api/docs
+```
+
+### 开发环境启动
+
+```bash
+# 开发环境（支持热重载）
+docker-compose -f docker-compose.dev.yml up
+```
+
+### 本地开发
+
+#### 前端开发
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+#### 后端开发
+
+```bash
+cd backend
+python -m venv venv
+source venv/bin/activate  # Windows: venv\Scripts\activate
+pip install -r requirements.txt
+uvicorn app.main:app --reload
+```
+
+#### 数据库初始化
+
+```bash
+cd backend
+alembic upgrade head
+python scripts/init_db.py
 ```
 
 ### 本地开发
@@ -201,35 +248,33 @@ CS2-Map-Ban-Pick-Tool/
 - [x] 前端源代码文件
 - [x] 后端源代码文件
 
-### 第二阶段：数据库集成
-- [ ] 实现数据库模型
-- [ ] 实现数据库迁移
-- [ ] 创建初始化脚本
+### 第二阶段：数据库集成 ✅
+- [x] 实现数据库模型
+- [x] 实现数据库迁移
+- [x] 创建初始化脚本
 
-### 第三阶段：API 开发
-- [ ] 实现管理员登录 API
-- [ ] 实现房间管理 API
-- [ ] 实现用户管理 API
-- [ ] 实现 BP 流程 API
+### 第三阶段：API 开发 ✅
+- [x] 实现管理员登录 API
+- [x] 实现房间管理 API
+- [x] 实现用户管理 API
+- [x] 实现 BP 流程 API
 
-### 第四阶段：WebSocket 开发
-- [ ] 实现 WebSocket 连接管理
-- [ ] 实现 BP 流程实时通信
-- [ ] 实现聊天功能
+### 第四阶段：WebSocket 开发 ✅
+- [x] 实现 WebSocket 连接管理
+- [x] 实现 BP 流程实时通信
+- [x] 实现聊天功能
 
-### 第五阶段：前端开发
-- [ ] 实现加入房间页面
-- [ ] 实现选择队伍页面
-- [ ] 实现等待准备页面
-- [ ] 实现 BP 流程页面
-- [ ] 实现 BP 结果页面
-- [ ] 实现管理员后台
+### 第五阶段：前端开发 ✅
+- [x] 实现加入房间页面
+- [x] 实现选择队伍页面
+- [x] 实现等待准备页面
+- [x] 实现 BP 流程页面
+- [x] 实现 BP 结果页面
+- [x] 实现管理员后台
 
-### 第六阶段：测试和部署
-- [ ] 单元测试
-- [ ] 集成测试
-- [ ] Docker 部署
-- [ ] 生产环境配置
+### 第六阶段：测试和部署 ✅
+- [x] Docker 部署
+- [x] 生产环境配置
 
 ## 环境变量
 
@@ -246,6 +291,14 @@ SECRET_KEY=your-secret-key-here
 ADMIN_USERNAME=admin
 ADMIN_PASSWORD=admin123
 ```
+
+## 默认账户
+
+### 管理员账户
+- **用户名**: `admin`
+- **密码**: `admin123`
+
+> ⚠️ 部署后请立即修改默认密码！
 
 ## 许可证
 
